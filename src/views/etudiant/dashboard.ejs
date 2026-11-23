@@ -1,0 +1,54 @@
+<%- include('../partials/header') %>
+<h1>Mon dossier d’inscription <%= annee %></h1>
+<p><%= etudiant.prenom %> <%= etudiant.nom %> · <%= etudiant.numero_etudiant %></p>
+
+<% if (dossier) { %>
+  <p>État : <span class="badge <%= dossier.etat %>"><%= etats[dossier.etat] %></span></p>
+  <% if (dossier.commentaire) { %><p class="note">Commentaire de la scolarité : <%= dossier.commentaire %></p><% } %>
+  <% if (dossier.etat === 'valide') { %>
+    <p><a class="btn" href="/etudiant/attestation">Télécharger mon attestation d’inscription (PDF)</a></p>
+  <% } %>
+<% } %>
+
+<% if (!dossier || dossier.etat !== 'valide') { %>
+<form method="post" action="/etudiant/dossier" class="card">
+  <h2><%= dossier ? 'Modifier ma demande' : 'Ma demande d’inscription' %></h2>
+  <label>Filière
+    <select name="filiere"><% const fSel = dossier ? dossier.filiere : etudiant.filiere; filieres.forEach(f => { %><option <%= f === fSel ? 'selected' : '' %>><%= f %></option><% }) %></select>
+  </label>
+  <label>Niveau
+    <select name="niveau"><% const nSel = dossier ? dossier.niveau : etudiant.niveau; niveaux.forEach(n => { %><option <%= n === nSel ? 'selected' : '' %>><%= n %></option><% }) %></select>
+  </label>
+  <button><%= dossier ? 'Mettre à jour' : 'Déposer ma demande' %></button>
+</form>
+<% } %>
+
+<% if (dossier) { %>
+<h2>Pièces justificatives</h2>
+<table>
+  <thead><tr><th>Pièce</th><th>Fichier</th><th>Taille</th><th>Déposée le</th></tr></thead>
+  <tbody>
+  <% Object.entries(typesPieces).forEach(([type, libelle]) => { const p = parType[type]; %>
+    <tr>
+      <td><%= libelle %></td>
+      <% if (p) { %>
+        <td><a href="/etudiant/pieces/<%= p.id %>" target="_blank" rel="noopener"><%= p.nom_fichier %></a></td>
+        <td><%= fmtTaille(p.taille) %></td><td><%= fmtDate(p.created_at) %></td>
+      <% } else { %><td colspan="3" class="muted">Manquante</td><% } %>
+    </tr>
+  <% }) %>
+  </tbody>
+</table>
+
+<% if (dossier.etat !== 'valide') { %>
+<form method="post" action="/etudiant/pieces" enctype="multipart/form-data" class="card">
+  <h2>Déposer une pièce</h2>
+  <label>Type
+    <select name="type"><% Object.entries(typesPieces).forEach(([type, libelle]) => { %><option value="<%= type %>"><%= libelle %></option><% }) %></select>
+  </label>
+  <label>Fichier (PDF ou JPG, 5 Mo max) <input type="file" name="fichier" accept=".pdf,.jpg,.jpeg,application/pdf,image/jpeg" required></label>
+  <button>Envoyer</button>
+</form>
+<% } %>
+<% } %>
+<%- include('../partials/footer') %>

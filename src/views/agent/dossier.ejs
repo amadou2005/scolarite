@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+<p><a href="/agent">← Liste des dossiers</a></p>
+<h1>Dossier <%= dossier.numero_etudiant %></h1>
+<p><%= dossier.prenom %> <%= dossier.nom %> · <%= dossier.email %></p>
+<p><%= dossier.filiere %> · <%= dossier.niveau %> · <%= dossier.annee %></p>
+<p>État : <span class="badge <%= dossier.etat %>"><%= etats[dossier.etat] %></span></p>
+<% if (dossier.commentaire) { %><p class="note">Commentaire : <%= dossier.commentaire %></p><% } %>
+
+<h2>Pièces</h2>
+<table>
+  <thead><tr><th>Type</th><th>Fichier</th><th>Taille</th><th>Déposée le</th></tr></thead>
+  <tbody>
+  <% pieces.forEach(p => { %>
+    <tr>
+      <td><%= typesPieces[p.type] %></td>
+      <td><a href="/agent/pieces/<%= p.id %>" target="_blank" rel="noopener"><%= p.nom_fichier %></a></td>
+      <td><%= fmtTaille(p.taille) %></td><td><%= fmtDate(p.created_at) %></td>
+    </tr>
+  <% }) %>
+  <% if (!pieces.length) { %><tr><td colspan="4" class="muted">Aucune pièce déposée.</td></tr><% } %>
+  </tbody>
+</table>
+
+<form method="post" action="/agent/dossiers/<%= dossier.id %>/decision" class="card">
+  <h2>Décision</h2>
+  <label><input type="radio" name="decision" value="valide" required> Valider</label>
+  <label><input type="radio" name="decision" value="rejete"> Rejeter (commentaire obligatoire)</label>
+  <label>Commentaire <textarea name="commentaire" rows="3" maxlength="2000"><%= dossier.commentaire || '' %></textarea></label>
+  <button>Enregistrer la décision</button>
+</form>
+<%- include('../partials/footer') %>

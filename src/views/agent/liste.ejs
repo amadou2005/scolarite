@@ -1,0 +1,34 @@
+<%- include('../partials/header') %>
+<h1>Dossiers <%= annee %> <small>(<%= total %>)</small></h1>
+<form method="get" class="filters">
+  <select name="filiere">
+    <option value="">Toutes les filières</option>
+    <% filieres.forEach(f => { %><option <%= f === filtre.filiere ? 'selected' : '' %>><%= f %></option><% }) %>
+  </select>
+  <select name="etat">
+    <option value="">Tous les états</option>
+    <% Object.entries(etats).forEach(([k, v]) => { %><option value="<%= k %>" <%= k === filtre.etat ? 'selected' : '' %>><%= v %></option><% }) %>
+  </select>
+  <button>Filtrer</button>
+</form>
+<table>
+  <thead><tr><th>N° étudiant</th><th>Nom</th><th>Filière</th><th>Niveau</th><th>Pièces</th><th>État</th><th>Mis à jour</th></tr></thead>
+  <tbody>
+  <% dossiers.forEach(d => { %>
+    <tr>
+      <td><a href="/agent/dossiers/<%= d.id %>"><%= d.numero_etudiant %></a></td>
+      <td><%= d.prenom %> <%= d.nom %></td><td><%= d.filiere %></td><td><%= d.niveau %></td>
+      <td><%= d.nb_pieces %>/4</td>
+      <td><span class="badge <%= d.etat %>"><%= etats[d.etat] %></span></td>
+      <td><%= fmtDate(d.updated_at) %></td>
+    </tr>
+  <% }) %>
+  <% if (!dossiers.length) { %><tr><td colspan="7" class="muted">Aucun dossier.</td></tr><% } %>
+  </tbody>
+</table>
+<p class="pager">
+  <% if (prec) { %><a href="<%= prec %>">← Précédent</a><% } %>
+  Page <%= page %> / <%= pages %>
+  <% if (suiv) { %><a href="<%= suiv %>">Suivant →</a><% } %>
+</p>
+<%- include('../partials/footer') %>

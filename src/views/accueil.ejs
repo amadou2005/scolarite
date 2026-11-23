@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<section class="hero">
+  <span class="live"><i class="dot"></i> Inscriptions <%= annee %> ouvertes</span>
+  <h1>Votre inscription universitaire,<br><span class="grad">sans file d’attente.</span></h1>
+  <p class="lead">Créez votre compte, déposez vos pièces et suivez la validation de votre dossier en temps réel. Téléchargez votre attestation dès qu’il est validé.</p>
+  <p class="cta">
+    <a class="btn big" href="/register">Créer mon compte étudiant</a>
+    <a class="btn big ghost" href="/login">Se connecter</a>
+  </p>
+</section>
+
+<% if (stats) { %>
+<section class="stats reveal">
+  <div class="stat"><strong data-count="<%= stats.total %>">0</strong><span>dossiers déposés</span></div>
+  <div class="stat"><strong data-count="<%= stats.valides %>">0</strong><span>dossiers validés</span></div>
+  <div class="stat"><strong data-count="<%= stats.attente %>">0</strong><span>en cours de traitement</span></div>
+</section>
+<% } %>
+
+<section>
+  <h2 class="reveal">Comment ça marche</h2>
+  <ol class="steps">
+    <li class="reveal"><b>1</b><div><h3>Créez votre compte</h3><p>Numéro d’étudiant, filière, niveau : moins d’une minute.</p></div></li>
+    <li class="reveal"><b>2</b><div><h3>Déposez votre demande</h3><p>Confirmez la filière et le niveau visés pour l’année.</p></div></li>
+    <li class="reveal"><b>3</b><div><h3>Envoyez vos pièces</h3><p>Carte d’identité, relevé de notes, photo, reçu de paiement (PDF ou JPG).</p></div></li>
+    <li class="reveal"><b>4</b><div><h3>Recevez votre attestation</h3><p>Dès la validation par la scolarité, elle est disponible en PDF.</p></div></li>
+  </ol>
+</section>
+
+<p class="muted reveal">Vous faites partie du personnel de la scolarité ? <a href="/login?profil=personnel">Accès agents et administrateurs</a></p>
+<%- include('partials/footer') %>

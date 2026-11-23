@@ -1,0 +1,32 @@
+<%- include('../partials/header') %>
+<h1>Administration — <%= annee %></h1>
+<p><%= nbEtudiants %> étudiants inscrits sur la plateforme.</p>
+
+<h2>Dossiers par filière et par état</h2>
+<table>
+  <thead><tr><th>Filière</th><% Object.values(etats).forEach(l => { %><th><%= l %></th><% }) %></tr></thead>
+  <tbody>
+  <% Object.entries(stats).forEach(([filiere, s]) => { %>
+    <tr><td><%= filiere %></td><% Object.keys(etats).forEach(k => { %><td><%= s[k] %></td><% }) %></tr>
+  <% }) %>
+  </tbody>
+  <tfoot><tr><th>Total</th><% Object.keys(etats).forEach(k => { %><th><%= totaux[k] %></th><% }) %></tr></tfoot>
+</table>
+
+<h2>Agents de la scolarité</h2>
+<table>
+  <thead><tr><th>Nom</th><th>E-mail</th><th>Créé le</th></tr></thead>
+  <tbody>
+  <% agents.forEach(a => { %><tr><td><%= a.prenom %> <%= a.nom %></td><td><%= a.email %></td><td><%= fmtDate(a.created_at) %></td></tr><% }) %>
+  </tbody>
+</table>
+
+<form method="post" action="/admin/agents" class="card">
+  <h2>Créer un compte agent</h2>
+  <label>Nom <input name="nom" value="<%= form.nom || '' %>" required></label>
+  <label>Prénom <input name="prenom" value="<%= form.prenom || '' %>" required></label>
+  <label>E-mail <input type="email" name="email" value="<%= form.email || '' %>" required></label>
+  <label>Mot de passe <input type="password" name="password" minlength="8" required></label>
+  <button>Créer l’agent</button>
+</form>
+<%- include('../partials/footer') %>

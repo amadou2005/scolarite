@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eef2ff">
+  <title><%= titre ? titre + ' — ' : '' %>Scolarité · Université du Saloum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<header class="top">
+  <a class="brand" href="/">
+    <span class="logo" aria-hidden="true">🎓</span>
+    <span>Scolarité<small>Université du Saloum</small></span>
+  </a>
+  <% if (user) { %>
+  <nav>
+    <span class="user-chip">
+      <span class="avatar"><%= (user.prenom || '?').charAt(0).toUpperCase() %><%= (user.nom || '').charAt(0).toUpperCase() %></span>
+      <span><%= user.prenom %> <%= user.nom %> <em><%= user.role %></em></span>
+    </span>
+    <form method="post" action="/logout"><button class="link">Déconnexion</button></form>
+  </nav>
+  <% } else { %>
+  <nav>
+    <a href="/login">Connexion</a>
+    <a class="btn small" href="/register">Créer un compte</a>
+  </nav>
+  <% } %>
+</header>
+<main>
+<% if (flash) { %><div class="flash <%= flash.type %>"><%= flash.msg %></div><% } %>
+<% if (erreurs.length) { %><div class="flash erreur"><ul><% erreurs.forEach(e => { %><li><%= e %></li><% }) %></ul></div><% } %>

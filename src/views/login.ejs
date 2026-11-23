@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<section class="auth">
+  <h1>Connexion</h1>
+  <form method="post" action="/login" class="card auth-card" data-loading>
+    <input type="hidden" name="next" value="<%= form.next || '' %>">
+
+    <div class="segmented" role="radiogroup" aria-label="Profil">
+      <label><input type="radio" name="profil" value="etudiant" <%= form.profil !== 'personnel' ? 'checked' : '' %>><span>Étudiant</span></label>
+      <label><input type="radio" name="profil" value="personnel" <%= form.profil === 'personnel' ? 'checked' : '' %>><span>Agent / Admin</span></label>
+    </div>
+
+    <label>E-mail ou numéro d’étudiant
+      <input name="identifiant" id="identifiant" value="<%= form.identifiant || '' %>" required autofocus autocomplete="username">
+    </label>
+    <label>Mot de passe
+      <span class="pw">
+        <input type="password" name="password" id="password" required autocomplete="current-password">
+        <button type="button" class="link" data-toggle-password="password" aria-pressed="false">Afficher</button>
+      </span>
+    </label>
+    <button class="submit"><span class="label">Se connecter</span><i class="spinner"></i></button>
+  </form>
+  <p>Pas encore de compte ? <a href="/register">Créer mon compte étudiant</a></p>
+</section>
+<%- include('partials/footer') %>
