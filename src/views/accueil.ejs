@@ -1,14 +1,57 @@
 <%- include('partials/header') %>
+<%
+  const icones = {
+    'Informatique': '<path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13.5 6l-3 12"/>',
+    'Mathématiques': '<path d="M5 7h6M8 4v6M13 17h6M5 17l5-5M10 17l-5-5M13 8h6"/>',
+    'Physique-Chimie': '<path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8"/>',
+    'Biologie': '<path d="M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10zM12 7v8M9 11h6"/>',
+    'Droit': '<path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 0 0 5 0L5 8zm14 0l-2.5 6a3 3 0 0 0 5 0L19 8z"/>',
+    'Économie-Gestion': '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2M4 10l6-6 6 9"/>',
+    'Lettres Modernes': '<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10M9 8h5"/>'
+  };
+  const defaut = '<path d="M3 9l9-5 9 5-9 5zM7 12v5c0 1.2 2.2 2.5 5 2.5s5-1.3 5-2.5v-5"/>';
+%>
+
+<!-- ============ HERO ============ -->
 <section class="hero">
-  <span class="live"><i class="dot"></i> Inscriptions <%= annee %> ouvertes</span>
-  <h1>Votre inscription universitaire,<br><span class="grad">sans file d’attente.</span></h1>
-  <p class="lead">Créez votre compte, déposez vos pièces et suivez la validation de votre dossier en temps réel. Téléchargez votre attestation dès qu’il est validé.</p>
-  <p class="cta">
-    <a class="btn big" href="/register">Créer mon compte étudiant</a>
-    <a class="btn big ghost" href="/login">Se connecter</a>
-  </p>
+  <div class="hero-copy">
+    <span class="live"><i class="dot"></i> Inscriptions <%= annee %> ouvertes</span>
+    <h1>Ancrer le savoir,<br><span class="grad">sans file d’attente.</span></h1>
+    <p class="lead">Créez votre compte, déposez vos pièces et suivez la validation de votre dossier en temps réel. Votre attestation d’inscription est disponible en PDF dès la validation.</p>
+    <p class="cta">
+      <a class="btn big" href="/register">Créer mon compte étudiant <svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn big ghost" href="/login">Se connecter</a>
+    </p>
+    <ul class="trust">
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Dépôt 100 % en ligne</li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Suivi en temps réel</li>
+      <li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Attestation PDF</li>
+    </ul>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+    <div class="glass-card gc-main tilt">
+      <div class="gc-head">
+        <span class="avatar">AD</span>
+        <div><b>Aïssatou Diallo</b><small>SAL2600142 · Informatique · L2</small></div>
+        <span class="badge valide">Validé</span>
+      </div>
+      <ol class="mini-steps">
+        <li class="done"><i></i><span>Demande</span></li>
+        <li class="done"><i></i><span>Pièces</span></li>
+        <li class="done"><i></i><span>Validation</span></li>
+        <li class="now"><i></i><span>Attestation</span></li>
+      </ol>
+      <div class="bar"><span></span></div>
+      <div class="gc-doc"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6"/></svg><span>attestation-inscription.pdf</span><em>PDF</em></div>
+    </div>
+    <div class="glass-card gc-float f1"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><div><b>Pièces vérifiées</b><small>4 / 4 reçues</small></div></div>
+    <div class="glass-card gc-float f2"><span class="dot"></span><div><b>Dossier validé</b><small>à l’instant</small></div></div>
+  </div>
 </section>
 
+<!-- ============ CHIFFRES ============ -->
 <% if (stats) { %>
 <section class="stats reveal">
   <div class="stat"><strong data-count="<%= stats.total %>">0</strong><span>dossiers déposés</span></div>
@@ -17,8 +60,57 @@
 </section>
 <% } %>
 
-<section>
-  <h2 class="reveal">Comment ça marche</h2>
+<!-- ============ PRÉSENTATION ============ -->
+<section class="band" id="universite">
+  <div class="sec-head reveal">
+    <span class="eyebrow">L’Université</span>
+    <h2>Une scolarité simple, humaine et fiable</h2>
+  </div>
+  <div class="about reveal">
+    <div class="tabs" role="tablist" aria-label="Mission, vision, valeurs">
+      <button type="button" class="tab-btn is-on" role="tab" aria-selected="true" data-tab="mission">Mission</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="vision">Vision</button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="valeurs">Valeurs</button>
+      <span class="tab-glider" aria-hidden="true"></span>
+    </div>
+    <div class="tab-panels">
+      <div class="tab-panel is-on" data-panel="mission" role="tabpanel">
+        <p>Accompagner chaque étudiant de l’admission à l’attestation : une inscription administrative claire, rapide et sans déplacement inutile, avec une équipe de scolarité disponible à chaque étape.</p>
+      </div>
+      <div class="tab-panel" data-panel="vision" role="tabpanel">
+        <p>Faire de l’Université du Saloum un établissement de référence au Sénégal, où les démarches numériques libèrent du temps pour l’essentiel : apprendre, chercher et innover.</p>
+      </div>
+      <div class="tab-panel" data-panel="valeurs" role="tabpanel">
+        <p>Excellence, transparence, équité et service public. Chaque dossier est traité avec la même rigueur, et chaque décision est expliquée à l’étudiant.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILIÈRES ============ -->
+<section class="band" id="filieres">
+  <div class="sec-head reveal">
+    <span class="eyebrow">Formations</span>
+    <h2>Les filières ouvertes à l’inscription</h2>
+  </div>
+  <div class="fil-grid">
+    <% filieres.forEach((f, i) => { %>
+    <article class="fil reveal tilt">
+      <span class="fil-ico"><svg viewBox="0 0 24 24"><%- icones[f] || defaut %></svg></span>
+      <h3><%= f %></h3>
+      <p class="muted">Licence · Master</p>
+      <span class="fil-more">Niveaux <%= niveaux[0] %> à <%= niveaux[niveaux.length - 1] %></span>
+    </article>
+    <% }) %>
+  </div>
+</section>
+
+<!-- ============ COMMENT ÇA MARCHE ============ -->
+<section class="band" id="inscription">
+  <div class="sec-head reveal">
+    <span class="eyebrow">Inscription</span>
+    <h2>Comment ça marche</h2>
+  </div>
   <ol class="steps">
     <li class="reveal"><b>1</b><div><h3>Créez votre compte</h3><p>Numéro d’étudiant, filière, niveau : moins d’une minute.</p></div></li>
     <li class="reveal"><b>2</b><div><h3>Déposez votre demande</h3><p>Confirmez la filière et le niveau visés pour l’année.</p></div></li>
@@ -27,5 +119,17 @@
   </ol>
 </section>
 
-<p class="muted reveal">Vous faites partie du personnel de la scolarité ? <a href="/login?profil=personnel">Accès agents et administrateurs</a></p>
+<!-- ============ APPEL À L'ACTION ============ -->
+<section class="cta-band reveal">
+  <div>
+    <h2>Prêt à rejoindre l’Université&nbsp;?</h2>
+    <p>Votre dossier d’inscription <%= annee %> vous attend.</p>
+  </div>
+  <p class="cta">
+    <a class="btn big" href="/register">Commencer</a>
+    <a class="btn big ghost" href="/login">Accéder à mon espace</a>
+  </p>
+</section>
+
+<p class="muted staff reveal">Vous faites partie du personnel de la scolarité ? <a href="/login?profil=personnel">Accès agents et administrateurs</a></p>
 <%- include('partials/footer') %>

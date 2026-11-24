@@ -1,4 +1,46 @@
 </main>
-<footer>v<%= version %> · <%= vmName %></footer>
+<footer class="foot" id="contact">
+  <div class="foot-card">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="/">
+          <span class="logo" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none"><path d="M24 6 6 15l18 9 18-9z" fill="#fff"/><path d="M13 21v8c0 3.3 5 6 11 6s11-2.7 11-6v-8l-11 5.5z" fill="#fff" fill-opacity=".72"/><path d="M40 17v13" stroke="#f6c244" stroke-width="2.4" stroke-linecap="round"/><circle cx="40" cy="32" r="2.2" fill="#f6c244"/></svg>
+          </span>
+          <span class="brand-txt"><b>Université du Saloum</b><small>Service de la Scolarité</small></span>
+        </a>
+        <p class="muted">Inscriptions administratives en ligne : dépôt des pièces, suivi du dossier et attestation d’inscription au format PDF.</p>
+      </div>
+      <div>
+        <h4>L’Université</h4>
+        <ul>
+          <li><a href="/#universite">Présentation</a></li>
+          <li><a href="/#filieres">Filières</a></li>
+          <li><a href="/#inscription">Comment s’inscrire</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a href="/login">Espace étudiant</a></li>
+          <li><a href="/register">Créer un compte</a></li>
+          <li><a href="/login?profil=personnel">Accès personnel</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="contact">
+          <li>Kaolack, Sénégal</li>
+          <li>scolarite@univ-saloum.example</li>
+          <li>Lun – Ven · 8h – 16h30</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bar">
+      <span>© <%= new Date().getFullYear() %> Université du Saloum · Tous droits réservés</span>
+      <span class="ver">v<%= version %> · <%= vmName %></span>
+    </div>
+  </div>
+</footer>
 </body>
 </html>

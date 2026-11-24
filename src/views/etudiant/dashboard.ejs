@@ -1,6 +1,27 @@
 <%- include('../partials/header') %>
-<h1>Mon dossier d’inscription <%= annee %></h1>
-<p><%= etudiant.prenom %> <%= etudiant.nom %> · <%= etudiant.numero_etudiant %></p>
+<div class="page-head">
+  <span class="eyebrow">Espace étudiant</span>
+  <h1>Mon dossier d’inscription <%= annee %></h1>
+  <p class="muted"><%= etudiant.prenom %> <%= etudiant.nom %> · <%= etudiant.numero_etudiant %></p>
+</div>
+
+<%
+  const complet = dossier && Object.keys(typesPieces).every((t) => parType[t]);
+  const rejet = dossier && dossier.etat === 'rejete';
+  const valide = dossier && dossier.etat === 'valide';
+  const etapes = [
+    ['Demande', !!dossier],
+    ['Pièces', !!complet],
+    [rejet ? 'Rejeté' : 'Validation', !!valide, rejet],
+    ['Attestation', !!valide],
+  ];
+  const courante = etapes.findIndex((e) => !e[1]);
+%>
+<ol class="stepper" aria-label="Avancement du dossier">
+  <% etapes.forEach((e, i) => { %>
+  <li class="<%= e[1] ? 'done' : (e[2] ? 'bad' : (i === courante ? 'now' : '')) %>"><i><%= e[1] ? '✓' : (e[2] ? '!' : i + 1) %></i><span><%= e[0] %></span></li>
+  <% }) %>
+</ol>
 
 <% if (dossier) { %>
   <p>État : <span class="badge <%= dossier.etat %>"><%= etats[dossier.etat] %></span></p>
@@ -11,7 +32,7 @@
 <% } %>
 
 <% if (!dossier || dossier.etat !== 'valide') { %>
-<form method="post" action="/etudiant/dossier" class="card">
+<form method="post" action="/etudiant/dossier" class="card wide">
   <h2><%= dossier ? 'Modifier ma demande' : 'Ma demande d’inscription' %></h2>
   <label>Filière
     <select name="filiere"><% const fSel = dossier ? dossier.filiere : etudiant.filiere; filieres.forEach(f => { %><option <%= f === fSel ? 'selected' : '' %>><%= f %></option><% }) %></select>
@@ -25,7 +46,7 @@
 
 <% if (dossier) { %>
 <h2>Pièces justificatives</h2>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Pièce</th><th>Fichier</th><th>Taille</th><th>Déposée le</th></tr></thead>
   <tbody>
   <% Object.entries(typesPieces).forEach(([type, libelle]) => { const p = parType[type]; %>
@@ -38,10 +59,10 @@
     </tr>
   <% }) %>
   </tbody>
-</table>
+</table></div>
 
 <% if (dossier.etat !== 'valide') { %>
-<form method="post" action="/etudiant/pieces" enctype="multipart/form-data" class="card">
+<form method="post" action="/etudiant/pieces" enctype="multipart/form-data" class="card wide">
   <h2>Déposer une pièce</h2>
   <label>Type
     <select name="type"><% Object.entries(typesPieces).forEach(([type, libelle]) => { %><option value="<%= type %>"><%= libelle %></option><% }) %></select>

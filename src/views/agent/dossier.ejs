@@ -1,13 +1,22 @@
 <%- include('../partials/header') %>
-<p><a href="/agent">← Liste des dossiers</a></p>
-<h1>Dossier <%= dossier.numero_etudiant %></h1>
-<p><%= dossier.prenom %> <%= dossier.nom %> · <%= dossier.email %></p>
-<p><%= dossier.filiere %> · <%= dossier.niveau %> · <%= dossier.annee %></p>
-<p>État : <span class="badge <%= dossier.etat %>"><%= etats[dossier.etat] %></span></p>
+<p class="crumb"><a href="/agent">← Liste des dossiers</a></p>
+<div class="page-head">
+  <span class="eyebrow">Dossier d’inscription</span>
+  <h1>Dossier <%= dossier.numero_etudiant %></h1>
+</div>
+<div class="profile">
+  <span class="avatar lg"><%= (dossier.prenom || '?').charAt(0).toUpperCase() %><%= (dossier.nom || '').charAt(0).toUpperCase() %></span>
+  <div class="profile-txt">
+    <b><%= dossier.prenom %> <%= dossier.nom %></b>
+    <span class="muted"><%= dossier.email %></span>
+    <span class="muted"><%= dossier.filiere %> · <%= dossier.niveau %> · <%= dossier.annee %></span>
+  </div>
+  <span class="badge <%= dossier.etat %>"><%= etats[dossier.etat] %></span>
+</div>
 <% if (dossier.commentaire) { %><p class="note">Commentaire : <%= dossier.commentaire %></p><% } %>
 
 <h2>Pièces</h2>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Type</th><th>Fichier</th><th>Taille</th><th>Déposée le</th></tr></thead>
   <tbody>
   <% pieces.forEach(p => { %>
@@ -19,12 +28,14 @@
   <% }) %>
   <% if (!pieces.length) { %><tr><td colspan="4" class="muted">Aucune pièce déposée.</td></tr><% } %>
   </tbody>
-</table>
+</table></div>
 
-<form method="post" action="/agent/dossiers/<%= dossier.id %>/decision" class="card">
+<form method="post" action="/agent/dossiers/<%= dossier.id %>/decision" class="card wide">
   <h2>Décision</h2>
-  <label><input type="radio" name="decision" value="valide" required> Valider</label>
-  <label><input type="radio" name="decision" value="rejete"> Rejeter (commentaire obligatoire)</label>
+  <div class="choice">
+    <label class="opt ok"><input type="radio" name="decision" value="valide" required><span>Valider</span></label>
+    <label class="opt ko"><input type="radio" name="decision" value="rejete"><span>Rejeter <small>commentaire obligatoire</small></span></label>
+  </div>
   <label>Commentaire <textarea name="commentaire" rows="3" maxlength="2000"><%= dossier.commentaire || '' %></textarea></label>
   <button>Enregistrer la décision</button>
 </form>

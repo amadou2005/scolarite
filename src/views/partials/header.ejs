@@ -3,36 +3,76 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#eef2ff">
+  <meta name="theme-color" content="#f3f7f2">
   <title><%= titre ? titre + ' — ' : '' %>Scolarité · Université du Saloum</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
+<div class="progress" aria-hidden="true"></div>
 <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="topbar-links">
+      <a href="/">Espace numérique</a>
+      <a href="/#filieres">Formations</a>
+      <a href="/login?profil=personnel">Rejoignez-nous&nbsp;!</a>
+    </div>
+    <div class="topbar-right">
+      <a class="pill-admission" href="/register">Admission</a>
+      <span class="socials" aria-label="Réseaux sociaux">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5 3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm5 2.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5zM17.3 6a1 1 0 1 1-1 1 1 1 0 0 1 1-1z"/></svg></a>
+      </span>
+    </div>
+  </div>
+</div>
+
 <header class="top">
   <a class="brand" href="/">
-    <span class="logo" aria-hidden="true">🎓</span>
-    <span>Scolarité<small>Université du Saloum</small></span>
-  </a>
-  <% if (user) { %>
-  <nav>
-    <span class="user-chip">
-      <span class="avatar"><%= (user.prenom || '?').charAt(0).toUpperCase() %><%= (user.nom || '').charAt(0).toUpperCase() %></span>
-      <span><%= user.prenom %> <%= user.nom %> <em><%= user.role %></em></span>
+    <span class="logo" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none">
+        <path d="M24 6 6 15l18 9 18-9z" fill="#fff"/>
+        <path d="M13 21v8c0 3.3 5 6 11 6s11-2.7 11-6v-8l-11 5.5z" fill="#fff" fill-opacity=".72"/>
+        <path d="M40 17v13" stroke="#f6c244" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="40" cy="32" r="2.2" fill="#f6c244"/>
+      </svg>
     </span>
-    <form method="post" action="/logout"><button class="link">Déconnexion</button></form>
-  </nav>
-  <% } else { %>
-  <nav>
-    <a href="/login">Connexion</a>
-    <a class="btn small" href="/register">Créer un compte</a>
-  </nav>
-  <% } %>
+    <span class="brand-txt"><b>Université du Saloum</b><small>Service de la Scolarité</small></span>
+  </a>
+
+  <button type="button" class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
+
+  <div class="menu" id="menu">
+    <nav class="links" aria-label="Navigation principale">
+      <a href="/">Accueil</a>
+      <a href="/#universite">L’Université</a>
+      <a href="/#filieres">Formations</a>
+      <a href="/#inscription">Inscription</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <% if (user) { %>
+    <div class="account">
+      <span class="user-chip">
+        <span class="avatar"><%= (user.prenom || '?').charAt(0).toUpperCase() %><%= (user.nom || '').charAt(0).toUpperCase() %></span>
+        <span class="who"><%= user.prenom %> <%= user.nom %> <em><%= user.role %></em></span>
+      </span>
+      <form method="post" action="/logout"><button class="link">Déconnexion</button></form>
+    </div>
+    <% } else { %>
+    <div class="account">
+      <a class="signin" href="/login">Connexion</a>
+      <a class="btn small" href="/register">Créer un compte</a>
+    </div>
+    <% } %>
+  </div>
 </header>
+
 <main>
-<% if (flash) { %><div class="flash <%= flash.type %>"><%= flash.msg %></div><% } %>
-<% if (erreurs.length) { %><div class="flash erreur"><ul><% erreurs.forEach(e => { %><li><%= e %></li><% }) %></ul></div><% } %>
+<% if (flash) { %><div class="flash <%= flash.type %>" role="status"><%= flash.msg %></div><% } %>
+<% if (erreurs.length) { %><div class="flash erreur" role="alert"><ul><% erreurs.forEach(e => { %><li><%= e %></li><% }) %></ul></div><% } %>

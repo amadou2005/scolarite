@@ -1,5 +1,8 @@
 <%- include('partials/header') %>
-<h1><%= titre %></h1>
-<p><%= message %></p>
-<p><a href="/">Retour à l’accueil</a></p>
+<section class="err">
+  <span class="err-code" aria-hidden="true">:(</span>
+  <h1><%= titre %></h1>
+  <p class="lead"><%= message %></p>
+  <p><a class="btn" href="/">Retour à l’accueil</a></p>
+</section>
 <%- include('partials/footer') %>

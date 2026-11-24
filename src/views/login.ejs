@@ -1,5 +1,13 @@
 <%- include('partials/header') %>
-<section class="auth">
+<section class="auth-wrap">
+  <aside class="auth-side" aria-hidden="true">
+    <span class="orb o1"></span><span class="orb o2"></span>
+    <h2>Bon retour parmi nous</h2>
+    <p>Suivez l’état de votre dossier, déposez vos pièces et téléchargez votre attestation.</p>
+    <ul class="trust"><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Connexion sécurisée</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Données protégées</li></ul>
+  </aside>
+  <div class="auth">
+    <span class="eyebrow">Espace personnel</span>
   <h1>Connexion</h1>
   <form method="post" action="/login" class="card auth-card" data-loading>
     <input type="hidden" name="next" value="<%= form.next || '' %>">
@@ -21,5 +29,6 @@
     <button class="submit"><span class="label">Se connecter</span><i class="spinner"></i></button>
   </form>
   <p>Pas encore de compte ? <a href="/register">Créer mon compte étudiant</a></p>
+</div>
 </section>
 <%- include('partials/footer') %>

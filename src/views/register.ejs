@@ -1,5 +1,13 @@
 <%- include('partials/header') %>
-<section class="auth">
+<section class="auth-wrap">
+  <aside class="auth-side" aria-hidden="true">
+    <span class="orb o1"></span><span class="orb o2"></span>
+    <h2>Rejoignez l’Université du Saloum</h2>
+    <p>Un compte, quelques minutes, et votre dossier d’inscription est lancé.</p>
+    <ul class="trust"><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Gratuit et rapide</li><li><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg> Suivi en temps réel</li></ul>
+  </aside>
+  <div class="auth">
+    <span class="eyebrow">Nouvel étudiant</span>
   <h1>Créer mon compte étudiant</h1>
   <form method="post" action="/register" class="card auth-card" data-loading>
     <label>Numéro d’étudiant <input name="numero_etudiant" value="<%= form.numero_etudiant || '' %>" required autofocus></label>
@@ -30,5 +38,6 @@
     <button class="submit"><span class="label">Créer mon compte</span><i class="spinner"></i></button>
   </form>
   <p><a href="/login">J’ai déjà un compte</a></p>
+</div>
 </section>
 <%- include('partials/footer') %>

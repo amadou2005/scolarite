@@ -1,9 +1,12 @@
 <%- include('../partials/header') %>
-<h1>Administration — <%= annee %></h1>
-<p><%= nbEtudiants %> étudiants inscrits sur la plateforme.</p>
+<div class="page-head">
+  <span class="eyebrow">Espace administrateur</span>
+  <h1>Administration — <%= annee %></h1>
+  <p class="muted"><strong data-count="<%= nbEtudiants %>">0</strong> étudiants inscrits sur la plateforme.</p>
+</div>
 
 <h2>Dossiers par filière et par état</h2>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Filière</th><% Object.values(etats).forEach(l => { %><th><%= l %></th><% }) %></tr></thead>
   <tbody>
   <% Object.entries(stats).forEach(([filiere, s]) => { %>
@@ -11,17 +14,17 @@
   <% }) %>
   </tbody>
   <tfoot><tr><th>Total</th><% Object.keys(etats).forEach(k => { %><th><%= totaux[k] %></th><% }) %></tr></tfoot>
-</table>
+</table></div>
 
 <h2>Agents de la scolarité</h2>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>Nom</th><th>E-mail</th><th>Créé le</th></tr></thead>
   <tbody>
   <% agents.forEach(a => { %><tr><td><%= a.prenom %> <%= a.nom %></td><td><%= a.email %></td><td><%= fmtDate(a.created_at) %></td></tr><% }) %>
   </tbody>
-</table>
+</table></div>
 
-<form method="post" action="/admin/agents" class="card">
+<form method="post" action="/admin/agents" class="card wide">
   <h2>Créer un compte agent</h2>
   <label>Nom <input name="nom" value="<%= form.nom || '' %>" required></label>
   <label>Prénom <input name="prenom" value="<%= form.prenom || '' %>" required></label>

@@ -1,5 +1,8 @@
 <%- include('../partials/header') %>
-<h1>Dossiers <%= annee %> <small>(<%= total %>)</small></h1>
+<div class="page-head">
+  <span class="eyebrow">Espace scolarité</span>
+  <h1>Dossiers <%= annee %> <small class="count"><%= total %></small></h1>
+</div>
 <form method="get" class="filters">
   <select name="filiere">
     <option value="">Toutes les filières</option>
@@ -11,7 +14,7 @@
   </select>
   <button>Filtrer</button>
 </form>
-<table>
+<div class="table-wrap"><table>
   <thead><tr><th>N° étudiant</th><th>Nom</th><th>Filière</th><th>Niveau</th><th>Pièces</th><th>État</th><th>Mis à jour</th></tr></thead>
   <tbody>
   <% dossiers.forEach(d => { %>
@@ -25,7 +28,7 @@
   <% }) %>
   <% if (!dossiers.length) { %><tr><td colspan="7" class="muted">Aucun dossier.</td></tr><% } %>
   </tbody>
-</table>
+</table></div>
 <p class="pager">
   <% if (prec) { %><a href="<%= prec %>">← Précédent</a><% } %>
   Page <%= page %> / <%= pages %>

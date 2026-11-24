@@ -62,7 +62,7 @@
   });
 
   // Reflet « liquid glass » qui suit le pointeur
-  $$('.card, .stat, .steps li, .hero, .top').forEach((el) => {
+  $$('.card, .stat, .steps li, .fil, .glass-card, .about, .cta-band, .top').forEach((el) => {
     el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty('--mx', `${e.clientX - r.left}px`);
@@ -71,7 +71,7 @@
   });
 
   // Effet ondulation sur les boutons
-  $$('button:not(.link), .btn').forEach((b) => {
+  $$('button:not(.link):not(.tab-btn):not(.burger), .btn').forEach((b) => {
     b.addEventListener('pointerdown', (e) => {
       const r = b.getBoundingClientRect();
       const d = Math.max(r.width, r.height);
@@ -85,8 +85,15 @@
 
   // En-tête plus opaque au défilement
   const top = document.querySelector('.top');
+  const prog = document.querySelector('.progress');
   if (top) {
-    const maj = () => top.classList.toggle('scrolled', scrollY > 8);
+    const maj = () => {
+      top.classList.toggle('scrolled', scrollY > 8);
+      if (prog) {
+        const h = document.documentElement.scrollHeight - innerHeight;
+        prog.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
+      }
+    };
     addEventListener('scroll', maj, { passive: true });
     maj();
   }
@@ -114,4 +121,57 @@
     });
   }, { threshold: 0.2 });
   $$('.reveal').forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 90}ms`; io.observe(el); });
+  // Menu mobile
+  const burger = document.querySelector('.burger');
+  const menu = document.getElementById('menu');
+  if (burger && menu) {
+    burger.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      burger.setAttribute('aria-expanded', String(open));
+    });
+    $$('.links a', menu).forEach((a) => a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }));
+  }
+
+  // Lien actif du menu
+  $$('.links a').forEach((a) => {
+    const u = new URL(a.href, location.href);
+    if (!u.hash && u.pathname === location.pathname) a.setAttribute('aria-current', 'page');
+  });
+
+  // Onglets Mission / Vision / Valeurs
+  const tabs = $$('.tab-btn');
+  if (tabs.length) {
+    const glider = document.querySelector('.tab-glider');
+    tabs.forEach((b, i) => b.addEventListener('click', () => {
+      tabs.forEach((x) => { x.classList.toggle('is-on', x === b); x.setAttribute('aria-selected', String(x === b)); });
+      $$('.tab-panel').forEach((p) => p.classList.toggle('is-on', p.dataset.panel === b.dataset.tab));
+      glider.style.setProperty('--i', i);
+    }));
+  }
+
+  // Inclinaison 3D douce + parallaxe du hero (pointeur fin uniquement)
+  const fin = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (fin && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    $$('.tilt').forEach((el) => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `perspective(900px) rotateY(${x * 7}deg) rotateX(${-y * 7}deg) translateY(-4px)`;
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = ''; });
+    });
+    const vis = document.querySelector('.hero-visual');
+    if (vis) {
+      const items = $$('.orb, .gc-float', vis);
+      addEventListener('pointermove', (e) => {
+        const x = e.clientX / innerWidth - 0.5;
+        const y = e.clientY / innerHeight - 0.5;
+        items.forEach((n, i) => { n.style.translate = `${x * (14 + i * 8)}px ${y * (14 + i * 8)}px`; });
+      }, { passive: true });
+    }
+  }
 })();
